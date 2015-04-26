@@ -8,3 +8,13 @@ $(document).ready(function() {
 	alert("document is ready. front end javascript call.");
 
 });
+
+
+// technically, we could also do
+// $('input').on('change', function()
+// but this one is more general
+
+$(document).on('change', '#queryInput', function() {
+	alert("you have submitted something");
+
+});
