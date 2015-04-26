@@ -2,14 +2,26 @@
 <html>
   <head>
 	<title>Searches Without Borders</title>
+
+	<!-- some stuff required for bootstrap -->
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!-- use a CDN for the css -->
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet">
+
 	<!-- don't host jquery ourselves! use the google hosted one -->
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+
+	<!-- don't host the bootstrap ourselves either -->
+	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+
 	<!-- all the front-end js should be contained in this file -->
 	<script src="script.js"></script>
   </head>
 
-  <body>
-	Welcome to Searches Without Borders!
-  </body>
+  <div class="container">
+	<h1>Welcome to Searches Without Borders</h1>
+	<p>This is some text.</p>
+  </div>
 
 </html>
