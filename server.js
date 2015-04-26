@@ -3,14 +3,34 @@
 var PORT = 8000;
 var ADDRESS = '127.0.0.1';
 
+// the node.js method of doing imports
+var fs = require("fs");
+var http = require("http");
+var url = require("url");
+
 // this function specifies how our http server deals with a request
-function processRequest(req, res) {
-	res.writeHead(200, {'Content-Type': 'text/plain'});
-	res.end('Hello World\n');
+function processRequest(request, response) {
+	var pathname = url.parse(request.url).pathname;
+    console.log("Request for " + pathname + " received.");
+
+	/*
+	response.writeHead(200, {'Content-Type': 'text/plain'});
+	response.end('Hello World\n');*/
+
+	response.writeHead(200);
+
+    if(pathname == "/") {
+        html = fs.readFileSync("index.html", "utf8");
+        response.write(html);
+    } else if (pathname == "/script.js") {
+        script = fs.readFileSync("script.js", "utf8");
+        response.write(script);
+    }
+
+    response.end();
 }
 
 
-var http = require('http');
 
 var server = http.createServer();
 
