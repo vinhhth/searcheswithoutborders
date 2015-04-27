@@ -21,9 +21,9 @@ function processRequest(request, response) {
 
 	response.writeHead(200);
 
-    if(pathname == "/") {
-        response.write("This is the data server speaking.");
-    }
+	var query = pathname.substring(1, pathname.length).replace(/%20/g, " ");
+
+	response.write("You submitted the query: " + query);
 
     response.end();
 }

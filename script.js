@@ -34,7 +34,7 @@ $(document).on('keyup', '#queryInput', function(event) {
 
 	if(event.keyCode == 13 && query != "") {
 		// asynchronous http request
-		$.ajax({url: URL,
+		$.ajax({url: URL + query,
 				data: query,
 				success: receivedInformation,
 				error: serverError
