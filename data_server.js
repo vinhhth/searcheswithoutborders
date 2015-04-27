@@ -8,6 +8,7 @@ var fs = require("fs");
 var http = require("http");
 var url = require("url");
 
+
 // this function specifies how our http server deals with a request
 function processRequest(request, response) {
 	var pathname = url.parse(request.url).pathname;
@@ -21,11 +22,31 @@ function processRequest(request, response) {
 
 	response.writeHead(200);
 
-	var query = pathname.substring(1, pathname.length).replace(/%20/g, " ");
+	var raw_query = pathname.substring(1, pathname.length);
 
-	response.write("You submitted the query: " + query);
+	var query = raw_query.replace(/%20/g, " ");
 
-    response.end();
+	// response.write("You submitted the query: " + query);
+
+	http.get({
+        host: 'www.google.com',
+        path: '/search?q=' + raw_query
+    }, function(res) {
+        // Continuously update stream with data
+        var body = '';
+        res.on('data', function(d) {
+            body += d;
+        });
+        res.on('end', function() {
+
+            // Data reception is done, do whatever with it!
+            //var parsed = JSON.parse(body);
+			console.log(body);
+            response.write(body);
+			response.end();
+        });
+    });
+
 }
 
 
