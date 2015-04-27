@@ -1,6 +1,6 @@
-// run using 'node server.js'
+// run using 'node data_server.js'
 
-var PORT = 8000;
+var PORT = 9000;
 var ADDRESS = '127.0.0.1';
 
 // the node.js method of doing imports
@@ -13,18 +13,16 @@ function processRequest(request, response) {
 	var pathname = url.parse(request.url).pathname;
     console.log("Request for " + pathname + " received.");
 
-	/*
-	response.writeHead(200, {'Content-Type': 'text/plain'});
-	response.end('Hello World\n');*/
+	// just ignore this bullshit. DO NOT delete it.
+	response.setHeader('Access-Control-Allow-Origin', 'http://localhost:8000');
+	response.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+	response.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
+	response.setHeader('Access-Control-Allow-Credentials', true);
 
 	response.writeHead(200);
 
     if(pathname == "/") {
-        html = fs.readFileSync("index.html", "utf8");
-        response.write(html);
-    } else if (pathname == "/script.js") {
-        script = fs.readFileSync("script.js", "utf8");
-        response.write(script);
+        response.write("This is the data server speaking.");
     }
 
     response.end();
