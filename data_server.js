@@ -12,11 +12,11 @@ var cheerio = require('cheerio');
 
 // this function specifies how our http server deals with a request
 function processRequest(request, response) {
-    var pathname = url.parse(request.url).pathname;
+	var pathname = url.parse(request.url).pathname;
     console.log("Request for " + pathname + " received.");
 
     // just ignore this bullshit. DO NOT delete it.
-    response.setHeader('Access-Control-Allow-Origin', 'http://127.0.0.1');
+    response.setHeader('Access-Control-Allow-Origin', '*');
     response.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
     response.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
     response.setHeader('Access-Control-Allow-Credentials', true);
