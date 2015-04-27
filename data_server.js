@@ -46,7 +46,7 @@ function processRequest(request, response) {
 			var actualData = $("#res")[0];
 			$ = cheerio.load(actualData);
 			//$("#imagebox_bigimages").remove();
-			console.log(actualData);
+			//console.log(actualData);
 
 			$('a').each(function(index) {
 				var url = this.attribs.href;
