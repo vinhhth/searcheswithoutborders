@@ -8,13 +8,7 @@ var fs = require("fs");
 var http = require("http");
 var url = require("url");
 
-// var $ = require('jquery')(require("jsdom").jsdom().parentWindow);
-//var $ = require('jquery');
-
 var cheerio = require('cheerio');
-
-// var jsdom = require("jsdom");
-// $ = require("jquery")(jsdom.jsdom().createWindow());
 
 // this function specifies how our http server deals with a request
 function processRequest(request, response) {
@@ -61,6 +55,8 @@ function processRequest(request, response) {
 					var cleanedURL = url.substring(7,index);
 					cleanedURL = cleanedURL.replace(/%3F/g, "?");
 					cleanedURL = cleanedURL.replace(/%3D/g, "=");
+					cleanedURL = cleanedURL.replace(/%23/g, "#");
+					cleanedURL = cleanedURL.replace(/%26/g, "&");
 
 					if(cleanedURL.indexOf("webcache.googleusercontent.com") == -1 && cleanedURL.indexOf("/settings/ads/preferences") == -1)
 						response.write(cleanedURL + "<br>");
