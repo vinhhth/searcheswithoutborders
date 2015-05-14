@@ -57,10 +57,19 @@ var nextCounter2 = 0;
 //     });
 // }
 
+var jsonToRespond = [];
 
 function respond(response, lang, query, type, next_r){
     type = type || ""; 
     google.resultsPerPage = 25
+    google.requestOptions = {
+    headers: {
+    'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+    'Accept-Encoding': 'gzip, deflate',
+    'Cache-Control': 'max-age=0',
+    'Connection': 'keep-alive',
+    }
+    }
     if(lang !== 'en')
     {
         google.lang = lang
@@ -75,15 +84,19 @@ function respond(response, lang, query, type, next_r){
             }
         }
 
-        console.log(links);
 
         for (var i = 0; i < links.length; ++i) {
             if("link" in links[i] && links[i].link)
-            {    
+            {   
+                console.log(JSON.stringify(links[i]));
+                links[i].translated = (type == "tr4nsl4ted") ? true : false;
+                // response.write(JSON.stringify(links[i]));
+                jsonToRespond.push(links[i]);
+                /*
                 response.write(type + "<h3> <a target='_blank' href='" +  links[i].link + "'>" +  links[i].title + "</a> </h3>");
                 response.write("<p>" + links[i].description + "</p>");  
                 response.write("<h6> <a target='_blank' href='" + links[i].link + "'>" +  links[i].link  + "</a> </h6>");
-                response.write("<br>");
+                response.write("<br>"); */
             }
 
         }
@@ -149,18 +162,23 @@ function processRequest(request, response) {
     response.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
     response.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
     response.setHeader('Access-Control-Allow-Credentials', true);
+    response.setHeader('Content-Type', 'application/json');
 
     response.writeHead(200);
-
+    jsonToRespond = [];
     var raw_query = pathname.substring(1, pathname.length);
 
-    var query = raw_query.replace(/%20/g, " ");
+    var query = decodeURIComponent(raw_query);
 
-    respond(response, 'en', raw_query);
+    respond(response, 'en', query);
     setTimeout(function(){
         translate.translate(query, { to: 'zh' }, function(err, res) {
             var query2 = res.text;
-            respond(response, 'hk', query2, "tr4nsl4ted", function(res){ res.end(); } );
+            respond(response, 'hk', query2, "tr4nsl4ted", function(res){ 
+                res.write(JSON.stringify(jsonToRespond));
+                res.end(); 
+                console.log("DONE WRITING");
+            });
         });
     }, 2000);
 

@@ -14,18 +14,21 @@ $(document).ready(function() {
 var bootstrap_list_item = "<li" + " class='list-group-item'>";
 // this is the ajax callback function
 function receivedInformation(result, textStatus, jqXHR) {
-    $("#progress-ind").hide();
-      
-    $("#output-trans").html("");
-    $("#output-reg").html("");
-    var results = result.split("<br>");
-    for (var i = 0; i < results.length; i++) {
-        if (results[i].indexOf("tr4nsl4ted") == 0) {
-            $("#output-trans").append(bootstrap_list_item + decodeURIComponent(decodeURIComponent(results[i].substring(10))) + "</li>");
-        } else {
-            $("#output-reg").append(bootstrap_list_item + decodeURIComponent(decodeURIComponent(results[i])) + "<br>");
-        }
-    }
+    console.log("receivedInformation");
+    console.log(JSON.parse(result));
+
+    // $("#progress-ind").hide();
+
+    // $("#output-trans").html("");
+    // $("#output-reg").html("");
+    // var results = result.split("<br>");
+    // for (var i = 0; i < results.length; i++) {
+    //     if (results[i].indexOf("tr4nsl4ted") == 0) {
+    //         $("#output-trans").append(bootstrap_list_item /* + decodeURIComponent(decodeURIComponent(results[i].substring(10))) */ + results[i].substring(10) + "</li>");
+    //     } else {
+    //         $("#output-reg").append(bootstrap_list_item + /* decodeURIComponent(decodeURIComponent(results[i]))*/ +results[i] + "<br>");
+    //     }
+    // }
 }
 
 // this is the ajax callback function on fail
@@ -42,14 +45,26 @@ $(document).on('keyup', '#queryInput', function(event) {
     var query = $("#queryInput").val();
 
     if (event.keyCode == 13 && query != "") {
-
         $("#progress-ind").show();
+        $("#output-trans").html("");
+        $("#output-reg").html("");
         // asynchronous http request
-        $.ajax({
-            url: URL + query,
-            data: query,
-            success: receivedInformation,
-            error: serverError
+        $.getJSON(URL + query, query, function(data, textStatus) {
+            $("#progress-ind").hide();
+
+            for (var i = 0; i < data.length; i++) {
+                var item = data[i];
+                var htmlToAppend = bootstrap_list_item +
+                    "<h3> <a href='" + item.link + "'>" + item.title + "</a> </h3>" +
+                    "<p>" + item.description + "</p>" +
+                    "<h6> <a href='" + item.link + "'>" + item.link + "</a> </h6>" +
+                    "</li>";
+                if (item.translated) {
+                    $("#output-trans").append(htmlToAppend);
+                } else {
+                    $("#output-reg").append(htmlToAppend);
+                }
+            }
         });
     }
 });
