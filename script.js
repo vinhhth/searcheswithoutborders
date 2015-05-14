@@ -11,18 +11,27 @@ var URL = "http://127.0.0.1:9000/"
 $(document).ready(function() {
 
 });
-
+var bootstrap_list_item = "<li" + " class='list-group-item'>";
 // this is the ajax callback function
 function receivedInformation(result, textStatus, jqXHR) {
-
-	$("#output").append(result + "<br>");
-
+    $("#progress-ind").hide();
+      
+    $("#output-trans").html("");
+    $("#output-reg").html("");
+    var results = result.split("<br>");
+    for (var i = 0; i < results.length; i++) {
+        if (results[i].indexOf("tr4nsl4ted") == 0) {
+            $("#output-trans").append(bootstrap_list_item + decodeURIComponent(decodeURIComponent(results[i].substring(10))) + "</li>");
+        } else {
+            $("#output-reg").append(bootstrap_list_item + decodeURIComponent(decodeURIComponent(results[i])) + "<br>");
+        }
+    }
 }
 
 // this is the ajax callback function on fail
 function serverError(jqXHR, textStatus, errorThrown) {
 
-	$("#output").append("Error on server side. " + textStatus + " " + errorThrown + "<br>");
+    $("#output").append("Error on server side. " + textStatus + " " + errorThrown + "<br>");
 }
 
 // technically, we could also do
@@ -30,14 +39,17 @@ function serverError(jqXHR, textStatus, errorThrown) {
 // but this one is more general
 
 $(document).on('keyup', '#queryInput', function(event) {
-	var query = $("#queryInput").val();
+    var query = $("#queryInput").val();
 
-	if(event.keyCode == 13 && query != "") {
-		// asynchronous http request
-		$.ajax({url: URL + query,
-				data: query,
-				success: receivedInformation,
-				error: serverError
-			   });
-	}
+    if (event.keyCode == 13 && query != "") {
+
+        $("#progress-ind").show();
+        // asynchronous http request
+        $.ajax({
+            url: URL + query,
+            data: query,
+            success: receivedInformation,
+            error: serverError
+        });
+    }
 });

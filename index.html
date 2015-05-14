@@ -1,35 +1,41 @@
 <!DOCTYPE html>
 <html>
-  <head>
-	<title>Searches Without Borders</title>
 
-	<!-- some stuff required for bootstrap -->
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<!-- use a CDN for the css -->
-	<link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet">
+<head>
+    <title>Searches Without Borders</title>
+    <!-- some stuff required for bootstrap -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- use a CDN for the css -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+    <!-- don't host jquery ourselves! use the google hosted one -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <!-- don't host the bootstrap ourselves either -->
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    <!-- all the front-end js should be contained in this file -->
+    <script src="script.js"></script>
+</head>
 
-	<!-- don't host jquery ourselves! use the google hosted one -->
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-
-	<!-- don't host the bootstrap ourselves either -->
-	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
-
-	<!-- all the front-end js should be contained in this file -->
-	<script src="script.js"></script>
-  </head>
-
-  <body>
-	<div class="container">
-	  <h1>Welcome to Searches Without Borders</h1>
-	  <!-- <p>Search something!</p> -->
-	  <input type="text" class="form-control" placeholder="Search something!" id="queryInput">
-
-	</div>
-
-	<div class="container" id="output">
-
-	</div>
-  </body>
+<body>
+    <div class="container">
+        <h1>Welcome to Searches Without Borders</h1>
+        <!-- <p>Search something!</p> -->
+        <input type="text" class="form-control" placeholder="Search something!" id="queryInput">
+        <br>
+        <br>
+        <div id="progress-ind" style="display:none"> <i class="fa fa-spinner fa-spin fa-3x"></i> Searching on different engines. </div>
+        <div class="row">
+            <div class="col-md-6">
+                <ul class="list-group" id="output-reg">
+                </ul>
+            </div>
+            <div class="col-md-6">
+                <ul class="list-group" id="output-trans">
+                </ul>
+            </div>
+        </div>
+    </div>
+</body>
 
 </html>
