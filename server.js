@@ -12,11 +12,6 @@ var url = require("url");
 function processRequest(request, response) {
 	var pathname = url.parse(request.url).pathname;
     console.log("Request for " + pathname + " received.");
-
-	/*
-	response.writeHead(200, {'Content-Type': 'text/plain'});
-	response.end('Hello World\n');*/
-
 	response.writeHead(200);
 
     if(pathname == "/") {
@@ -26,16 +21,11 @@ function processRequest(request, response) {
         script = fs.readFileSync("script.js", "utf8");
         response.write(script);
     }
-
     response.end();
 }
 
-
 var server = http.createServer();
-
 server.listen(PORT, ADDRESS);
-
 // tell our http server how to deal with a request (e.g. using processRequest)
 server.addListener("request", processRequest);
-
 console.log("Server running at http://" + ADDRESS + ":" + PORT + "/");

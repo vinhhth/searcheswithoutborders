@@ -11,51 +11,6 @@ var url = require("url");
 var translate = require('yandex-translate-api')('trnsl.1.1.20150513T030345Z.73125b8d84a36fdf.e679ee68e06b6ae0164b792048951a1342cd12fd');
 var cheerio = require('cheerio');
 var nextCounter = 0;
-var nextCounter2 = 0;
-// function baidu(request,response)
-// {
-//     http.get({
-//         host: 'www.google.com.hk',
-//         path: '/search?q=' + request
-//     }, function(res) {
-//         // Continuously update stream with data
-//         var body = '';
-//         res.on('data', function(d) {
-//             body += d;
-//         });
-//         res.on('end', function() {
-
-//             // Data reception is done, do whatever with it!
-//             //var parsed = JSON.parse(body);
-//             var $ = cheerio.load(body);
-//             var actualData = $("#res")[0];
-//             $ = cheerio.load(actualData);
-//             //$("#imagebox_bigimages").remove();
-//             //console.log(actualData);
-
-//             $('a').each(function(index) {
-//                 var url = this.attribs.href;
-//                 if (url.substring(0, 7) == "/url?q=") {
-//                     var index = url.indexOf("&sa");
-//                     var cleanedURL = url.substring(7, index);
-//                     cleanedURL = cleanedURL.replace(/%3F/g, "?");
-//                     cleanedURL = cleanedURL.replace(/%3D/g, "=");
-//                     cleanedURL = cleanedURL.replace(/%23/g, "#");
-//                     cleanedURL = cleanedURL.replace(/%26/g, "&");
-
-//                     if (cleanedURL.indexOf("webcache.googleusercontent.com") == -1 && cleanedURL.indexOf("/settings/ads/preferences") == -1)
-//                         response.write(cleanedURL + "<br>");
-//                 }
-//                 //response.write(this.attribs.href + "<br>");
-//             });
-//             //console.log(body);
-//             //response.write(body);
-//             response.end();
-//         });
-//     }).on('error', function(e) {
-//         console.log("Got error: " + e.message);
-//     });
-// }
 
 var jsonToRespond = [];
 
@@ -84,72 +39,20 @@ function respond(response, lang, query, type, next_r){
             }
         }
 
-
         for (var i = 0; i < links.length; ++i) {
             if("link" in links[i] && links[i].link)
             {   
                 console.log(JSON.stringify(links[i]));
                 links[i].translated = (type == "tr4nsl4ted") ? true : false;
-                // response.write(JSON.stringify(links[i]));
                 jsonToRespond.push(links[i]);
-                /*
-                response.write(type + "<h3> <a target='_blank' href='" +  links[i].link + "'>" +  links[i].title + "</a> </h3>");
-                response.write("<p>" + links[i].description + "</p>");  
-                response.write("<h6> <a target='_blank' href='" + links[i].link + "'>" +  links[i].link  + "</a> </h6>");
-                response.write("<br>"); */
             }
 
         }
-      
 
         if(next_r !== undefined)
             next_r(response);
     });
     nextCounter = 0;
-// http.get({
-//     host: 'www.google.com',
-//     path: '/search?q=' + raw_query
-// }, function(res) {
-//     // Continuously update stream with data
-//     var body = '';
-//     res.on('data', function(d) {
-//         body += d;
-//     });
-//     res.on('end', function() {
-
-//         // Data reception is done, do whatever with it!
-//         //var parsed = JSON.parse(body);
-//         var $ = cheerio.load(body);
-//         var actualData = $("#res")[0];
-//         $ = cheerio.load(actualData);
-//         //$("#imagebox_bigimages").remove();
-//         //console.log(actualData);
-//         var ith = 0;
-//         $('a').each(function(i, el) {
-//             var url = this.attribs.href;
-//             if (url.substring(0, 7) == "/url?q=") {
-//                 var index = url.indexOf("&sa");
-//                 var cleanedURL = url.substring(7, index);
-//                 cleanedURL = cleanedURL.replace(/%3F/g, "?");
-//                 cleanedURL = cleanedURL.replace(/%3D/g, "=");
-//                 cleanedURL = cleanedURL.replace(/%23/g, "#");
-//                 cleanedURL = cleanedURL.replace(/%26/g, "&");
-
-//                 if (cleanedURL.indexOf("webcache.googleusercontent.com") == -1 && cleanedURL.indexOf("/settings/ads/preferences") == -1)
-//                     response.write(type + cleanedURL + "<br>");
-
-//                 ith++;
-//             }
-//             //response.write(this.attribs.href + "<br>");
-//         });
-//         //console.log(body);
-//         //response.write(body);
-//         if(next !== undefined)
-//             next(response);
-//     });
-// }).on('error', function(e) {
-//     console.log("Got an error with google search: " + e.message);
-// });
 
 }
 // this function specifies how our http server deals with a request
@@ -181,13 +84,6 @@ function processRequest(request, response) {
             });
         });
     }, 2000);
-
-
-
-    // console.log("out\t" + query2)
-
-    // response.write("You submitted the query: " + query);
-
     
 }
 

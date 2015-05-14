@@ -16,19 +16,6 @@ var bootstrap_list_item = "<li" + " class='list-group-item'>";
 function receivedInformation(result, textStatus, jqXHR) {
     console.log("receivedInformation");
     console.log(JSON.parse(result));
-
-    // $("#progress-ind").hide();
-
-    // $("#output-trans").html("");
-    // $("#output-reg").html("");
-    // var results = result.split("<br>");
-    // for (var i = 0; i < results.length; i++) {
-    //     if (results[i].indexOf("tr4nsl4ted") == 0) {
-    //         $("#output-trans").append(bootstrap_list_item /* + decodeURIComponent(decodeURIComponent(results[i].substring(10))) */ + results[i].substring(10) + "</li>");
-    //     } else {
-    //         $("#output-reg").append(bootstrap_list_item + /* decodeURIComponent(decodeURIComponent(results[i]))*/ +results[i] + "<br>");
-    //     }
-    // }
 }
 
 // this is the ajax callback function on fail
