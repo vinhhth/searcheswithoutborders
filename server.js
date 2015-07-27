@@ -1,7 +1,7 @@
 // run using 'node server.js'
 
 var PORT = 8000;
-var ADDRESS = '127.0.0.1';
+var ADDRESS = '0.0.0.0';
 
 // the node.js method of doing imports
 var fs = require("fs");

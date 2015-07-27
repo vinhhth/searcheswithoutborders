@@ -1,7 +1,7 @@
 // run using 'node data_server.js'
 
 var PORT = 9000;
-var ADDRESS = '127.0.0.1';
+var ADDRESS = '0.0.0.0';
 var google = require('google')
 
 // the node.js method of doing imports
